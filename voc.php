@@ -2,6 +2,54 @@
 
 class Voc
 {
+    function getTheWholeNumber($amount)
+    {
+      $val = "";
+      $vocLength = $this->getLength($amount);
+
+      $splitDecsAr = $this->splitDecimals($amount);
+
+      $number = $splitDecsAr[0];
+      $decimals = $splitDecsAr[1];
+      $decValue = "";
+      $decEnding = "ΛΕΠΤΑ";
+
+      $numberLength = strlen($number);
+
+
+      if($numberLength == 1)
+      {
+        $val = $this->getMonad($number,$numberLength);
+      } else if ($numberLength == 2)
+      {
+        $val = $this->getDecades($number,$numberLength);
+      } else if ($numberLength == 3)
+      {
+        $val = $this->getHundreds($number,$numberLength);
+      } else if ($numberLength == 4)
+      {
+        $val = $this->getThousands($number,$numberLength);
+      } else if ($numberLength == 5)
+      {
+        $val = $this->getDecadeThousands($number,$numberLength);
+      }
+
+      if(substr($decimals, 0, 1) == 0 )
+      {
+        $decValue = " ΚΑΙ ". $this->getMonad(substr($decimals,1,1), $numberLength) ." " . $decEnding;
+      } else if ( substr($decimals, 0, 1) != 0 )
+      {
+        $decValue = " ΚΑΙ ". $this->getDecades($decimals,2) ." " . $decEnding;
+      }
+
+      if ( substr($decimals, 0, 1) == 0 && substr($decimals, 1, 1) == 0 )
+      {
+        $decValue = "";
+      }
+      $value = $this->makeFinalAmount($val) . $decValue;
+      return $value;
+    }
+
     function getLength($amount)
     {
       return strlen($amount);
