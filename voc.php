@@ -36,7 +36,7 @@ class Voc
 
       if(substr($decimals, 0, 1) == 0 )
       {
-        $decValue = " ΚΑΙ ". $this->getMonad(substr($decimals,1,1), $numberLength) ." " . $decEnding;
+        $decValue = " ΚΑΙ ". $this->getMonad(substr($decimals,1,1), 2) ." " . $decEnding;
       } else if ( substr($decimals, 0, 1) != 0 )
       {
         $decValue = " ΚΑΙ ". $this->getDecades($decimals,2) ." " . $decEnding;
