@@ -211,7 +211,12 @@ class Voc
         }
       } else {
         $vocVal1 = $this->getMonad($val1, $digits);
-        $vocative = $vocVal0." ".$vocVal1;
+        if($vocVal1){
+            $vocative = $vocVal0." ".$vocVal1;
+        } else {
+          $vocative = $vocVal0.$vocVal1;
+        }
+
       }
 
       return $vocative;
