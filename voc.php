@@ -2,7 +2,7 @@
 
 class Voc
 {
-    function getTheWholeNumber($amount)
+    function getVoc($amount)
     {
       $val = "";
       $vocLength = $this->getLength($amount);
@@ -19,10 +19,10 @@ class Voc
 
       if($numberLength == 1)
       {
-        $val = $this->getMonad($number,$numberLength);
+        $val = $this->getUnits($number,$numberLength);
       } else if ($numberLength == 2)
       {
-        $val = $this->getDecades($number,$numberLength);
+        $val = $this->getTens($number,$numberLength);
       } else if ($numberLength == 3)
       {
         $val = $this->getHundreds($number,$numberLength);
@@ -36,10 +36,10 @@ class Voc
 
       if(substr($decimals, 0, 1) == 0 )
       {
-        $decValue = " ΚΑΙ ". $this->getMonad(substr($decimals,1,1), 2) ." " . $decEnding;
+        $decValue = " ΚΑΙ ". $this->getUnits(substr($decimals,1,1), 2) ." " . $decEnding;
       } else if ( substr($decimals, 0, 1) != 0 )
       {
-        $decValue = " ΚΑΙ ". $this->getDecades($decimals,2) ." " . $decEnding;
+        $decValue = " ΚΑΙ ". $this->getTens($decimals,2) ." " . $decEnding;
       }
 
       if ( substr($decimals, 0, 1) == 0 && substr($decimals, 1, 1) == 0 )
@@ -66,7 +66,7 @@ class Voc
       $val0 = substr($val,0,2);
       $val1 = substr($val,2,3);
 
-      $vocVal0 = $this->getDecades($val0, $digits);
+      $vocVal0 = $this->getTens($val0, $digits);
       $vocVal1 = $this->getHundreds($val1, 2);
 
       $vocative = $vocVal0 . " ΧΙΛΙΑΔΕΣ " . $vocVal1 ;
@@ -89,7 +89,7 @@ class Voc
         $vocVal0 = "ΧΙΛΙΑ";
         $ending0 = "";
       } else {
-        $vocVal0 = $this->getMonad($val0, $digits);
+        $vocVal0 = $this->getUnits($val0, $digits);
       }
       $vocVal0 = $vocVal0." ".$ending0;
       $vocVal1 = $this->getHundreds($val1,$digits);
@@ -153,14 +153,23 @@ class Voc
       }
 
       $vocVal0 = $vocVal0.$ending0;
-      $vocVal1 = $this->getDecades($val1,$digits);
+      $vocVal1 = $this->getTens($val1,$digits);
+      if($vocVal1)
+      {
+        if($val0 == 1)
+        {
+          $vocVal0 .=  "Ν";
+        }
+          $vocative = $vocVal0." ".$vocVal1;
+      } else {
+          $vocative = $vocVal0.$vocVal1;
+      }
 
-      $vocative = $vocVal0." ".$vocVal1;
       return $vocative;
     }
 
 
-    function getDecades($val, $digits)
+    function getTens($val, $digits)
     {
       $val0 = substr($val,0,1);
       $val1 = substr($val,1,1);
@@ -206,11 +215,11 @@ class Voc
         ($val1 == 2){ $vocative = "ΔΩΔΕΚΑ"; } else
         //($val1 == 3){ $vocative = "ΔΕΚΑΤΡΙΑ"; } else
         {
-          $vocVal1 = $this->getMonad($val1, $digits);
+          $vocVal1 = $this->getUnits($val1, $digits);
           $vocative = $vocVal0.$vocVal1;
         }
       } else {
-        $vocVal1 = $this->getMonad($val1, $digits);
+        $vocVal1 = $this->getUnits($val1, $digits);
         if($vocVal1){
             $vocative = $vocVal0." ".$vocVal1;
         } else {
@@ -222,7 +231,7 @@ class Voc
       return $vocative;
     }
 
-    function getMonad($val, $digits)
+    function getUnits($val, $digits)
     {
       $vocative = "";
       $ending = "";
