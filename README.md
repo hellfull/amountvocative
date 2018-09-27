@@ -1,4 +1,6 @@
 # amountvocative
+Ποσά ολογράφως. Για χρήση σε αποδείξεις τιμολόγια κλπ. 
+
 amount in vocative for greek currency ( currently euro )
 
 The implementation is made up to 99999,99 Euro.
